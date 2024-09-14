@@ -1,4 +1,4 @@
-#!/usr/bin env python3
+#!/usr/bin/env python3
 '''
 Module that concatenates two 2D matrices along a specific axis
 '''
