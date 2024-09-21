@@ -38,6 +38,7 @@ def cofactor(matrix):
 
     return cofactor
 
+
 def determinant(matrix):
     """
     Calculates the determinant
