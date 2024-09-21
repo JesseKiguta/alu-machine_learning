@@ -40,12 +40,10 @@ def cofactor(matrix):
     for i in range(len(matrix)):
         cofactor_row = []
         for j in range(len(matrix)):
-            submatrix = get_submatrix(matrix, i, j)
-            
             if len(matrix) == 1:
                 cofactor_row.append(1)
-            else:    
-                minor = determinant(submatrix)
+            else:
+                minor = determinant(get_submatrix(matrix, i, j))
                 cofactor_value = ((-1) ** (i + j)) * minor
                 cofactor_row.append(cofactor_value)
         cofactor.append(cofactor_row)
