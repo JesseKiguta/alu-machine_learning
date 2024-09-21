@@ -12,8 +12,11 @@ def inverse(matrix):
     if not isinstance(matrix, list) or not all(
             isinstance(row, list) for row in matrix):
         raise TypeError("matrix must be a list of lists")
-    if not matrix or len(matrix) != len(matrix[0]):
-        raise ValueError("matrix must be a non-empty square matrix")
+    for row in matrix:
+        if not matrix or len(row) != len(matrix):
+            raise ValueError("matrix must be a non-empty square matrix")
+        elif len(row) == 0:
+            raise ValueError("matrix must be a non-empty square matrix")
 
     n = len(matrix)
     det = __import__('3-adjugate').determinant(matrix)
