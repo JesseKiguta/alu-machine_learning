@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+"""
+Function that returns a cofactor matrix
+"""
+
+
+def cofactor(matrix):
+    """
+    Computes cofactors from minor matrices and returns a cofactor matrix
+    """
+    if not isinstance(matrix, list):
+        raise TypeError("matrix must be a list of lists")
+
+    if len(matrix) == 0:
+        raise TypeError("matrix must be a list of lists")
+
+    for row in matrix:
+        if type(row) is not list:
+            raise TypeError("matrix must be a list of lists")
+        if len(row) != len(matrix) or len(row) == 0:
+            raise ValueError("matrix must be a non-empty square matrix")
+
+    def get_submatrix(matrix, row, col):
+        return [matrix[i][:col] + matrix[i][col+1:]
+                for i in range(len(matrix)) if i != row]
+
+    def determinant(matrix):
+        if len(matrix) == 1:
+            return matrix[0][0]
+
+        if len(matrix) == 2:
+            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+
+        det = 0
+        for i in range(len(matrix)):
+            submatrix = [row[:i] + row[i+1:] for row in matrix[1:]]
+        det += ((-1) ** i) * matrix[0][i] * determinant(submatrix)
+
+    cofactor = []
+    for i in range(len(matrix)):
+        cofactor_row = []
+        for j in range(len(matrix)):
+            submatrix = get_submatrix(matrix, i, j)
+            
+            if len(matrix) == 1:
+                cofactor_row.append(1)
+            else:    
+                minor = determinant(submatrix)
+                cofactor_value = ((-1) ** (i + j)) * minor
+                cofactor_row.append(cofactor_value)
+        cofactor.append(cofactor_row)
+
+    return cofactor
