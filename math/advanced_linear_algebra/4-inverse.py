@@ -16,7 +16,7 @@ def inverse(matrix):
         raise ValueError("matrix must be a non-empty square matrix")
 
     n = len(matrix)
-    det = __import__('determinant').determinant(matrix)
+    det = __import__('3-adjugate').determinant(matrix)
     if det == 0:
         return None
 
