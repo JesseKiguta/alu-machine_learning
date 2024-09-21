@@ -33,7 +33,8 @@ def cofactor(matrix):
 
         det = 0
         for i in range(len(matrix)):
-            det += ((-1) ** i) * matrix[0][i] * determinant(get_submatrix(matrix, i, j))
+            submatrix = get_submatrix(matrix, i, j)
+            det += ((-1) ** i) * matrix[0][i] * int(determinant(submatrix))
 
     cofactor = []
     for i in range(len(matrix)):
@@ -42,7 +43,7 @@ def cofactor(matrix):
             if len(matrix) == 1:
                 cofactor_row.append(1)
             else:
-                minor = determinant(get_submatrix(matrix, i, j))
+                minor = int(determinant(get_submatrix(matrix, i, j)))
                 cofactor_value = ((-1) ** (i + j)) * minor
                 cofactor_row.append(cofactor_value)
         cofactor.append(cofactor_row)
