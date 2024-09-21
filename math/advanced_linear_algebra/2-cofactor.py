@@ -24,17 +24,6 @@ def cofactor(matrix):
         return [matrix[i][:col] + matrix[i][col+1:]
                 for i in range(len(matrix)) if i != row]
 
-    def determinant(matrix):
-        if len(matrix) == 1:
-            return matrix[0][0]
-
-        if len(matrix) == 2:
-            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
-
-        for j in range(len(matrix)):
-            submatrix = get_submatrix(matrix, 0, j)
-            return ((-1) ** j) * matrix[0][j] * determinant(submatrix)
-
     cofactor = []
     for i in range(len(matrix)):
         cofactor_row = []
@@ -48,3 +37,19 @@ def cofactor(matrix):
         cofactor.append(cofactor_row)
 
     return cofactor
+
+def determinant(matrix):
+    """
+    Calculates the determinant
+    """
+    if len(matrix) == 1:
+        return matrix[0][0]
+
+    if len(matrix) == 2:
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+
+    det = 0
+    for i in range(len(matrix)):
+        submatrix = [row[:i] + row[i+1:] for row in matrix[1:]]
+        det += ((-1) ** i) * matrix[0][i] * determinant(submatrix)
+    return det
