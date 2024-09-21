@@ -21,16 +21,16 @@ def determinant(matrix):
             return 1
         if len(row) != len(matrix):
             raise ValueError("matrix must be a square matrix")
-    
+  
     if len(matrix) == 1:
         return matrix[0][0]
 
     if len(matrix) == 2:
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
-    
+   
     det = 0
     for i in range(len(matrix)):
         submatrix = [row[:i] + row[i+1:] for row in matrix[1:]]
         det += ((-1) ** i) * matrix[0][i] * determinant(submatrix)
-    
+   
     return det
