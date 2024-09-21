@@ -19,15 +19,18 @@ def definiteness(matrix):
     if matrix.shape[0] != matrix.shape[1]:
         return None
 
+    if not np.allclose(matrix, matrix.T):
+        return None
+
     eigenvalues = np.linalg.eigvals(matrix)
 
-    if all (eigenvalues > 0):
+    if all(eigenvalues > 0):
         return "Positive definite"
-    elif all (eigenvalues >= 0):
+    elif all(eigenvalues >= 0):
         return "Positive semi-definite"
-    elif all (eigenvalues < 0):
+    elif all(eigenvalues < 0):
         return "Negative definite"
-    elif all (eigenvalues <= 0):
+    elif all(eigenvalues <= 0):
         return "Negative semi-definite"
     else:
         return "Indefinite"
