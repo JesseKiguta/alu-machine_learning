@@ -13,7 +13,7 @@ def adjugate(matrix):
 
     if len(matrix) == 0:
         raise TypeError("matrix must be a list of lists")
-    
+ 
     for row in matrix:
         if type(row) is not list:
             raise TypeError("matrix must be a list of lists")
@@ -21,7 +21,7 @@ def adjugate(matrix):
             raise ValueError("matrix must be a non-empty square matrix")
 
     def get_submatrix(matrix, row, col):
-        return [matrix[i][:col] + matrix[i][col+1:] 
+        return [matrix[i][:col] + matrix[i][col+1:]
                 for i in range(len(matrix)) if i != row]
 
     cofactor = []
@@ -30,7 +30,7 @@ def adjugate(matrix):
         for j in range(len(matrix)):
             if len(matrix) == 1:
                 cofactor_row.append(1)
-            else:    
+            else:
                 minor = determinant(get_submatrix(matrix, i, j))
                 cofactor_value = ((-1) ** (i + j)) * minor
                 cofactor_row.append(cofactor_value)
