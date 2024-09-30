@@ -8,7 +8,7 @@ def summation_i_squared(n):
     """
     Uses summation of squares formula to add squares upto n
     """
-    if type(n) is int and n >= 0:
-        return int((n * (n + 1) * (2 * n + 1)) / 6)
+    if isinstance(n, int) and n >= 1:
+        return (n * (n + 1) * (2 * n + 1)) // 6
     else:
         return None
