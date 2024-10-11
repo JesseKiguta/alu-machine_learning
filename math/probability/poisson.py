@@ -37,5 +37,5 @@ class Poisson:
         k_fct = 1
         for i in range(1, k + 1):
             k_fct = k_fct * i
-        pmf_num = (self.lambtha ** k * 2.718281828459045 ** (-self.lambtha))
+        pmf_num = self.lambtha ** k * 2.7182818285 ** (-self.lambtha)
         return pmf_num / k_fct
