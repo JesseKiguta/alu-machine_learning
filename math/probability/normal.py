@@ -21,27 +21,27 @@ class Normal:
             self.mean = float(mean)
             self.stddev = float(stddev)
         else:
-            if not isinstance (data, list):
+            if not isinstance(data, list):
                 raise TypeError("data must be a list")
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
             self.mean = float(sum(data) / len(data))
             stddev_num = [(x - self.mean) ** 2 for x in data]
-            self.stddev =  (sum(stddev_num) / len(data)) ** 0.5
+            self.stddev = (sum(stddev_num) / len(data)) ** 0.5
 
-    def z_score (self, x):
+    def z_score(self, x):
         '''
         returns the z-score of x
         '''
-        (x - self.mean) / self.stddev
+        return (x - self.mean) / self.stddev
 
-    def x_score (self, z):
+    def x_score(self, z):
         '''
         returns the x-score of z
         '''
-        self.mean + z * self.stddev
+        return self.mean + z * self.stddev
 
-    def pdf (self, x):
+    def pdf(self, x):
         '''
         returns the pdf value of x
         '''
