@@ -32,7 +32,7 @@ class Poisson:
         '''
         if not isinstance(k, int):
             k = int(k)
-        elif k <= 0:
+        elif k < 0 or k < 1 * 10 ** -5:
             return 0
         k_fct = 1
         for i in range(1, k + 1):
