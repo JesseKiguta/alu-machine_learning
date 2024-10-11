@@ -32,10 +32,14 @@ class Poisson:
         '''
         if not isinstance(k, int):
             k = int(k)
-        elif k < 0 or k < 1 * 10 ** -5:
+        elif k < 0:
             return 0
         k_fct = 1
         for i in range(1, k + 1):
             k_fct = k_fct * i
         pmf_num = self.lambtha ** k * 2.7182818285 ** (-self.lambtha)
-        return pmf_num / k_fct
+        result = pmf_num / k_fct
+        if result < 1 * 10 ** -5:
+            return 0
+        else:
+            return result
