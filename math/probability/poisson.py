@@ -39,7 +39,17 @@ class Poisson:
             k_fct = k_fct * i
         pmf_num = self.lambtha ** k * 2.7182818285 ** (-self.lambtha)
         result = pmf_num / k_fct
-        if result < 1 * 10 ** -5:
+        return result
+
+    def cdf(self, k):
+        '''
+        returns the cdf value for k
+        '''
+        if not isinstance(k, int):
+            k = int(k)
+        if k < 0:
             return 0
-        else:
-            return result
+        result = 0
+        for i in range(k + 1):
+            result = result + self.pmf(i)
+        return result
