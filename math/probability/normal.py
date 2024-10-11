@@ -3,6 +3,7 @@
 Contains a normal class that represents a normal distribution
 '''
 
+
 class Normal:
     '''
     normal class with init, z and x scores, pdf and cdf
