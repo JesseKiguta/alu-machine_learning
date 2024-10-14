@@ -9,7 +9,10 @@ def mean_cov(X):
     '''
     Finds the mean and covariance of a dataset X
     '''
-    if len(X.shape) != 2 or not isinstance(X, np.ndarray):
+    if not isinstance(X, np.ndarray):
+        raise TypeError("X must be a 2D numpy.ndarray")
+
+    if len(X.shape) != 2:
         raise TypeError("X must be a 2D numpy.ndarray")
 
     n = X.shape[0]
