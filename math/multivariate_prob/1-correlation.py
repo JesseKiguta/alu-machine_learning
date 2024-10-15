@@ -12,8 +12,17 @@ def correlation(C):
     if not isinstance(C, np.ndarray):
         raise TypeError("C must be a numpy.ndarray")
 
-    if len(C.shape) != 2:
+    if C.ndim == 1 and C.shape[0] == 1:
+        return np.array([[1.]])
+
+    if C.ndim != 2:
         raise ValueError("C must be a 2D square matrix")
 
-    corr_matrix = np.corrcoef(C, rowvar=False)
+    if C.shape[0] != C.shape[1]:
+        raise ValueError("C must be a 2D square matrix")
+
+    diag = np.diag(C) ** 0.5
+    outer = np.outer(diag, diag)
+    corr_matrix = C / outer
+
     return corr_matrix
