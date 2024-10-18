@@ -16,13 +16,13 @@ class MultiNormal:
         if not isinstance(data, np.ndarray) or len(data.shape) != 2:
             raise TypeError("data must be a 2D numpy.ndarray")
 
-        d, n = data.shape
+        n = data.shape[1]
         if n < 2:
             raise ValueError("data must contain multiple data points")
 
-        self.mean = np.mean(data, axis=1).reshape(d, 1)
+        self.mean = np.mean(data, axis=1).reshape(1, -1)
         centered_data = data - self.mean
-        self.cov = (centered_data.T @ centered_data) / (n - 1)
+        self.cov = (centered_data @ centered_data.T) / (n - 1)
 
     def pdf(self, x):
         '''
