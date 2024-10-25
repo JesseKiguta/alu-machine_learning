@@ -8,7 +8,7 @@ import numpy as np
 def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     '''
     convolves an image with:
-    - custom padding 
+    - custom padding
     - a kernel with custom stride
     returns a convolution as an ndarray
     '''
@@ -32,11 +32,10 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
 
     output_arr = np.zeros((m, output_h, output_w))
 
-    for i in range(output_h):
-        for j in range(output_w):
-            istr = i * sh
-            jstr = j * sw
-            region = padded_images[:, istr:istr + kh, jstr:jstr + kw]
-            output_arr[:, i, j] = np.sum(region * kernel, axis=(1, 2))
+    for h in range(output_h):
+        for w in range(output_w):
+            reg = padded_images[:, h * sh: h * sh + kh, w * sw: w * sw + kw]
+            result = np.sum(reg * kernel, axis=(1)).sum(axis=1)
+            output_arr[:, h, w] = result
 
     return output_arr
