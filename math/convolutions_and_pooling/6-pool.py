@@ -19,8 +19,8 @@ def pool(images, kernel_shape, stride, mode='max'):
 
     pooled = np.zeros((m, output_h, output_w, c))
 
-    for i in (output_h):
-        for j in (output_w):
+    for i in range(output_h):
+        for j in range(output_w):
             i_sh = i * sh
             j_sw = j * sw
             region = images[:, i_sh:i_sh + kh, j_sw:j_sw + kw, :]
