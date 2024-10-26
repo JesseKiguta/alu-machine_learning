@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 '''
-module that performs convolutions on images with channels
+module that performs convolutions on images with multiple kernels
 '''
 import numpy as np
 
 
-def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
+def convolve(images, kernels, padding='same', stride=(1, 1)):
     '''
     convolves an image with:
     - custom padding
-    - a kernel with custom stride
+    - many kernels with custom stride
     - channels
     returns a convolution as an ndarray
     '''
     m, h, w, c = images.shape
-    kh, kw, kc = kernel.shape
+    kh, kw, kc, nc = kernels.shape
     sh, sw = stride
 
     if padding == 'same':
@@ -31,13 +31,16 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     output_h = (h + 2 * ph - kh) // sh + 1
     output_w = (w + 2 * pw - kw) // sw + 1
 
-    output_arr = np.zeros((m, output_h, output_w))
+    output_arr = np.zeros((m, output_h, output_w, nc))
 
-    for i in range(output_h):
-        for j in range(output_w):
-            i_sh = i * sh
-            j_sh = j * sw
-            region = padded_images[:, i_sh:i_sh + kh, j_sh:j_sh + kw, :]
-            output_arr[:, i, j] = np.sum(region * kernel, axis=(1, 2, 3))
+    for k in range(nc):
+        kernel = kernels[:, :, :, k]
+        for i in range(output_h):
+            for j in range(output_w):
+                i_sh = i * sh
+                j_sh = j * sw
+                region = padded_images[:, i_sh:i_sh + kh, j_sh:j_sh + kw, :]
+                output_arr[:, i, j, k] = np.sum(region * kernel,
+                                                axis=(1, 2, 3))
 
     return output_arr
