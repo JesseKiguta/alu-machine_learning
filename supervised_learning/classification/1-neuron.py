@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" 
+"""
 Private neuron
 """
 
@@ -8,7 +8,7 @@ import numpy as np
 
 
 class Neuron():
-    """	
+    """
     Class that defines a single neuron performing binary classification
     """
     def __init__(self, nx):
@@ -29,14 +29,14 @@ class Neuron():
         Getter function for W
         """
         return self.__W
-    
+
     @property
     def b(self):
         """
         Getter function for b
         """
         return self.__b
-    
+
     @property
     def A(self):
         """

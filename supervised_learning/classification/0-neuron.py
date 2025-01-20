@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" 
+"""
 Neuron
 """
 
@@ -8,7 +8,7 @@ import numpy as np
 
 
 class Neuron():
-    """	
+    """
     Class that defines a single neuron performing binary classification
     """
     def __init__(self, nx):
