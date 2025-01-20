@@ -29,14 +29,14 @@ class Neuron():
         Getter function for W
         """
         return self.__W
- 
+
     @property
     def b(self):
         """
         Getter function for b
         """
         return self.__b
- 
+
     @property
     def A(self):
         """
