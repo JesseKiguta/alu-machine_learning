@@ -5,7 +5,7 @@
 import numpy as np
 
 
-class DeepNeuralNetworks:
+class DeepNeuralNetwork:
     """Deep Neural Network"""
     def __init__(self, nx, layers):
         """
