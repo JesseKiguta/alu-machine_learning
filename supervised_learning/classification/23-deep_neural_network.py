@@ -27,34 +27,34 @@ class DeepNeuralNetwork:
         ):
             raise TypeError("layers must be a list of positive integers")
 
-        self.L = len(layers)
-        self.cache = {}
-        self.weights = {}
+        self.__L = len(layers)
+        self.__cache = {}
+        self.__weights = {}
 
-        for layer in range(self.L):
+        for layer in range(self.__L):
             if layer == 0:
-                self.weights['W1'] = np.random.randn(
+                self.__weights['W1'] = np.random.randn(
                     layers[0], nx) * np.sqrt(2 / nx)
-                self.weights['b1'] = np.zeros([layers[0], 1])
+                self.__weights['b1'] = np.zeros([layers[0], 1])
 
             else:
-                self.weights['W{}'.format(layer+1)] = np.random.randn(
+                self.__weights['W{}'.format(layer+1)] = np.random.randn(
                     layers[layer],
                     layers[layer-1]) * np.sqrt(2. / layers[layer-1])
 
-                self.weights['b{}'.format(
+                self.__weights['b{}'.format(
                     layer+1)] = np.zeros((layers[layer], 1))
 
     @property
     def L(self):
         """Getter for L"""
         return self.__L
-    
+
     @property
     def cache(self):
         """Getter for cache"""
         return self.__cache
-    
+
     @property
     def weights(self):
         """Getter for weights"""
