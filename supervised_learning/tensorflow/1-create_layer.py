@@ -11,8 +11,8 @@ def create_layer(prev, n, activation):
     n is the number of nodes in the layer to create
     activation is the activation function that the layer should use
     """
-    initializer = tf.contrib.layers.variance_scaling_initializer(mode=
-                                                                 "FAN_AVG")
+    initializer = tf.contrib.layers.variance_scaling_initializer(
+        mode="FAN_AVG")
     layer = tf.layers.Dense(n, activation=activation,
                             kernel_initializer=initializer,
                             name='layer')
