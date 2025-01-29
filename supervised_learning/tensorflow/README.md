@@ -1,0 +1,1 @@
+Using Tensorflow 1.x to understand Tensorflow fundamentals.
