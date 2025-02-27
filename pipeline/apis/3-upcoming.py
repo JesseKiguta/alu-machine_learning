@@ -1,58 +1,52 @@
 #!/usr/bin/env python3
+"""Script that displays the upcoming launch"""
 
-"""
-This module contains a function that
-uses Uonofficial SpaceX API to display
-upcoming launch with these information:
-    - Name of the launch
-    - Date (in local time)
-    - Rocket name
-    - Launchpad name
-format of the output:
-<launch name> (<date>) <rocket name> - <launchpad name> (<launchpad locality>)
-"""
 
 import requests
+import datetime
 
 
-def upcomingLaunch():
-    """print upcoming launch"""
-    url = "https://api.spacexdata.com/v4/launches/upcoming"
-    response = requests.get(url)
-    data = response.json()
-    recent = 0
+def get_upcoming_launch():
+    """Script that displays the upcoming launch"""
 
-    for dic in data:
-        new = int(dic["date_unix"])
-        if recent == 0 or new < recent:
-            recent = new
-            launch_name = dic["name"]
-            date = dic["date_local"]
-            rocket_number = dic["rocket"]
-            launch_number = dic["launchpad"]
+    url = 'https://api.spacexdata.com/v4/launches/upcoming'
 
-    # launch = data[0]
-    # rocket_id = launch['rocket']
-    # launchpad_id = launch['launchpad']
-    rocket_url = "https://api.spacexdata.com/v4/rockets/{}".format(
-        rocket_number)
-    launchpad_url = "https://api.spacexdata.com/v4/launchpads/{}".format(
-        launch_number)
-    rocket_response = requests.get(rocket_url)
-    launchpad_response = requests.get(launchpad_url)
-    rocket_data = rocket_response.json()
-    launchpad_data = launchpad_response.json()
-    rocket_name = rocket_data['name']
-    launchpad_name = launchpad_data['name']
-    launchpad_locality = launchpad_data['locality']
-    print("{} ({}) {} - {} ({})".format(
-        launch_name,
-        date,
-        rocket_name,
-        launchpad_name,
-        launchpad_locality
-    ))
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        launches = response.json()
+
+        upcoming_launch = sorted(launches, key=lambda x: x['date_unix'])[0]
+
+        rocket_id = upcoming_launch['rocket']
+        rocket_url = 'https://api.spacexdata.com/v4/rockets/{}'.format(
+            rocket_id)
+        rocket_response = requests.get(rocket_url)
+        rocket_response.raise_for_status()
+        rocket = rocket_response.json()
+        rocket_name = rocket['name']
+
+        launchpad_id = upcoming_launch['launchpad']
+        launchpad_url = 'https://api.spacexdata.com/v4/launchpads/{}'.format(
+            launchpad_id)
+        launchpad_response = requests.get(launchpad_url)
+        launchpad_response.raise_for_status()
+        launchpad = launchpad_response.json()
+        launchpad_name = launchpad['name']
+        launchpad_locality = launchpad['locality']
+
+        date_local = upcoming_launch['date_local']
+
+        print(
+            "{} ({}) {} - {} ({})".format(
+                upcoming_launch['name'], date_local, rocket_name,
+                launchpad_name, launchpad_locality))
+
+    except requests.RequestException as e:
+        print('An error occurred while making an API request: {}'.format(e))
+    except Exception as err:
+        print('A general error occurred: {}'.format(err))
 
 
-if __name__ == "__main__":
-    upcomingLaunch()
+if __name__ == '__main__':
+    get_upcoming_launch()
