@@ -1,0 +1,1 @@
+Recurrent Neural Networks(RNNs), Bidirectional RNNs, Long Short Term Memory (LSTM), and Gated Recurrent Unit (GRU)
