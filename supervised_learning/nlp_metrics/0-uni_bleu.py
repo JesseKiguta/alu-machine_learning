@@ -1,36 +1,31 @@
 #!/usr/bin/env python3
-"""Creates and trains fastText"""
-from gensim.models import FastText
+"""Calculates unigram BLEU score"""
+import numpy as np
 
 
-def fasttext_model(
-    sentences,
-    size=100,
-    min_count=5,
-    negative=5,
-    window=5,
-    cbow=True,
-    iterations=5,
-    seed=0,
-    workers=1,
-):
-    """
-    fast text
-    """
-    if cbow is True:
-        cbow_flag = 0
+def uni_bleu(references, sentence):
+    '''
+        calculates the unigram BLEU score
+        for a sentence
+    '''
+    sentence_length = len(sentence)
+    references_length = []
+    words = {}
+
+    for translation in references:
+        references_length.append(len(translation))
+        for word in translation:
+            if word in sentence and word not in words.keys():
+                words[word] = 1
+
+    total = sum(words.values())
+    index = np.argmin([abs(len(i) - sentence_length) for i in references])
+    best_match = len(references[index])
+
+    if sentence_length > best_match:
+        BLEU = 1
     else:
-        cbow_flag = 1
-    model = FastText(
-        sentences=sentences,
-        size=size,
-        min_count=min_count,
-        window=window,
-        negative=negative,
-        sg=cbow_flag,
-        iter=iterations,
-        seed=seed,
-        workers=workers,
-    )
-    model.train(sentences, total_examples=model.corpus_count, epochs=model.epochs)
-    return model
+        BLEU = np.exp(1 - float(best_match) / float(sentence_length))
+    BLEU_score = BLEU * np.exp(np.log(total / sentence_length))
+
+    return BLEU_score
