@@ -37,7 +37,7 @@ class SelfAttention(tf.keras.layers.Layer):
         Returns: context, weights
             context: a tensor of shape (batch, units) that
             contains the attention vector for each time step
-        ''' 
+        '''
         W = self.W(tf.expand_dims(s_prev, 1))
         U = self.U(hidden_states)
         V = self.V(tf.nn.tanh(W + U))
